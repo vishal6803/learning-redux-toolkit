@@ -1,43 +1,35 @@
-import { useEffect, useState} from "react";
-import { addStudent } from "./features/students/studentSlice";
+import { useEffect, useState } from "react";
+import { addStudent, addTest, editTest, setIsEdit, setTest,setFormData, updateStudent } from "./features/students/studentSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { Typography, Box, TextField, Button } from "@mui/material";
 
 function Form() {
-  const dispatch = useDispatch()
-  const selectedStudent = useSelector(state=>state.student.selectedStudent);
-
-  
-  const [formdata,setFormData] = useState({
-    name:"",
-    roll:"",
-    email:"",
-  })
-  const {name,email,roll} = formdata;
-  function handleChange(e){
-     setFormData({...formdata , [e.target.name]:e.target.value})
+  const dispatch = useDispatch();
+  const { name, email, roll } = useSelector((state) => state.student.formData)
+ const isEdit = useSelector((state)=>state.student.isEdit)
+ function handleOnChange(e){
+   dispatch(setFormData({name:e.target.name,value:e.target.value}))
+ }
+  const styles = {
+    box: { display: "flex", flexDirection: "column", width: "30vw", padding: "30px", textAlign: "center" },
+    input: {
+      margin: "10px 0px"
+    }
   }
-  console.log(formdata);
-  function handleSubmit(e){
-e.preventDefault();
-dispatch(addStudent(formdata))
-setFormData({
-  name:"",
-  roll:"",
-  email:"",
-})
-  }
-  useEffect(()=>{ 
-    if(selectedStudent!=null)
-    setFormData(prev = {...prev,...selectedStudent})
-    },[name,email,roll])
-
   return (
-    <form onSubmit={handleSubmit}>
-     <input type="text" name="name" placeholder="enter name" value={name}  onChange={handleChange}/>
-     <input type="text" name="email" placeholder="enter email" value={email} onChange={handleChange} />
-     <input type="text" name="roll" placeholder="enter roll" value={roll} onChange={handleChange}/>
-     {!selectedStudent ?  <button type="submit" >Add</button> : <button type="submit" >update</button>}
-    </form>
+    
+
+    <Box sx={styles.box}>
+      <Typography variant="h5">Form</Typography>
+      <TextField sx={styles.input} size="small" label="Name" name="name" value={name}  onChange={handleOnChange}/>
+      <TextField sx={styles.input} size="small" label="Email" name="email" value={email}  onChange={handleOnChange}/>
+      <TextField sx={styles.input} size="small" label="Roll No." name="roll" value={roll} onChange={handleOnChange} />
+      {
+        !isEdit ? <Button variant="contained" onClick={()=>dispatch(addStudent())}>Add</Button>
+        :  <Button variant="contained" onClick={()=>dispatch(updateStudent())}>Update</Button>
+      }
+      
+    </Box>
   );
 }
 
