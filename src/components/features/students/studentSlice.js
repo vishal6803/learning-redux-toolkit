@@ -30,6 +30,7 @@ const studentSlice = createSlice({
     },
     addStudent: (state, action) => {
       state.students.push(state.formData)
+      state.formData = initialState.formData;
     },
     deleteStudent: (state, action) => {
       state.students = state.students.filter((student) => student.id !== action.payload)
@@ -42,6 +43,8 @@ const studentSlice = createSlice({
     },
     updateStudent:(state,action)=>{
       state.students=state.students.map((student)=>student.id==state.formData.id ? {...student,...state.formData} : student )
+      state.formData = initialState.formData;
+
     },
 
     setTest: (state, action) => {
