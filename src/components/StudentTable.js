@@ -1,59 +1,30 @@
 import { useDispatch, useSelector } from "react-redux";
-import { deleteStudent, deleteTest, editStudent, setIsEdit, setTest } from "./features/students/studentSlice";
-import { Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import { deleteStudent, editStudent } from "./features/students/studentSlice";
+import {  Table, TableBody, TableCell, TableContainer, TableHead, TableRow, useMediaQuery } from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditNoteIcon from '@mui/icons-material/EditNote';
 function StudentTable() {
-    const studentData = useSelector((state) => state.student.students)
-    const testData = useSelector((state) => state.student.testData)
-    const dispatch = useDispatch()
-    function edithandle(student, index) {
-        // dispatch(editStudent(student))
-        dispatch(setTest(student))
-        dispatch(setIsEdit(index))
+    const isBreakPoint980 = useMediaQuery('(max-width:980px)')
 
-    }
+    const studentData = useSelector((state) => state.student.students)
+    const dispatch = useDispatch();
     return (
-        // <table>
-        //     <thead>
-        //         <tr>
-        //             <th>Roll No.</th>
-        //             <th>Name</th>
-        //             <th>Email</th>
-        //         </tr>
-        //     </thead>
-        //     <tbody>
-        //         {studentData?.map((student, index) => {
-        //             return <tr key={index}>
-        //                 <td>{student.roll}</td>
-        //                 <td>{student.name}</td>
-        //                 <td>{student.email}</td>
-        //                 <td>{student.email}</td>
-        //                 <td>
-        //                     <button onClick={()=>dispatch(deleteStudent(student.roll))}>delete</button>
-        //                     <button onClick={()=>edithandle(student)}>edit</button>
-        //                 </td>
-        //             </tr>
-        //         })}
-        //         {
-        //             testData.map((item,index)=>{
-        //                 return <div key={index}>
-        //                     {item.test}
-        //                     <button onClick={()=>dispatch(deleteTest(index))}>delete</button>
-        //                     <button onClick={()=>edithandle(item.test,index)}>edit</button>
-        //                 </div>
-        //             })
-        //         }
-        //     </tbody>
-        // </table>
-        <TableContainer sx={{ width: "50vw", padding: "30px" }}>
+        <TableContainer sx={{ 
+            border: '2px solid yellow',
+            // width: isBreakPoint980? '100%' : '60%',
+            
+            
+            padding: "30px",
+            minWidth:"500px",maxWidth:"600px" 
+        }}>
             <Table>
                 <TableHead>
                     <TableRow>
                         <TableCell align="center">S No.</TableCell>
                         <TableCell align="center">Roll No.</TableCell>
                         <TableCell align="center">Name</TableCell>
-                        <TableCell align="center">Email)</TableCell>
+                        <TableCell align="center">Email</TableCell>
+                        <TableCell align="center">Opetaions</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>

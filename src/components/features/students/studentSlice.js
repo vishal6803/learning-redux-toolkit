@@ -37,36 +37,17 @@ const studentSlice = createSlice({
     },
     editStudent: (state, action) => {
       state.isEdit = true;
-     const selected =  state.students.find((student)=>student.id==action.payload)
+     const selected =  state.students.find((student)=>student.id===action.payload)
      state.formData = selected;
 
     },
     updateStudent:(state,action)=>{
-      state.students=state.students.map((student)=>student.id==state.formData.id ? {...student,...state.formData} : student )
+      state.students=state.students.map((student)=>student.id===state.formData.id ? {...student,...state.formData} : student )
       state.formData = initialState.formData;
-
+      state.isEdit = false;
     },
-
-    setTest: (state, action) => {
-      state.test = action.payload;
-    },
-    addTest: (state, action) => {
-      state.testData.push({ test: state.test })
-    },
-    editTest: (state, action) => {
-      const newData = state.testData
-      newData[state.isedit].test = state.test
-      state.testData = newData;
-    },
-    setIsEdit: (state, action) => {
-      state.isedit = action.payload
-    },
-    deleteTest: (state, action) => {
-      state.testData = state.testData.filter((value, index) => index !== action.payload)
-    }
-
   }
 })
 
-export const { setFormData ,addStudent,updateStudent, deleteStudent, editStudent, setTest, addTest, editTest, setIsEdit, deleteTest } = studentSlice.actions
+export const { setFormData ,addStudent,updateStudent, deleteStudent, editStudent } = studentSlice.actions
 export default studentSlice.reducer;
